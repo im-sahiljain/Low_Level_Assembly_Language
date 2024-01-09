@@ -1,0 +1,31 @@
+     1                                  section .data
+     2 00000000 00                      	Source db 0
+     3                                  	;; Source String"
+     4                                  	len equ $-Source
+     5                                  section .bss
+     6 00000000 ??                      	Destination resb len
+     7                                  section .text
+     8                                  	global main
+     9                                  main:
+    10 00000000 BE[00000000]            	mov esi,Source
+    11 00000005 BF[00000000]            	mov edi, Destination
+    12 0000000A B901000000              	mov ecx,len
+    13 0000000F 31C0                    	xor eax,eax
+    14 00000011 83C601                  	add esi,len
+    15 00000014 4E                      	dec esi
+    16 00000015 FD                      lp:	std
+    17 00000016 AC                      	lodsb
+    18 00000017 FC                      	cld
+    19 00000018 AA                      	stosb
+    20 00000019 E2FA                    	loop lp
+    21                                  	;;  dec ecx    cmp ecx,0   jnz lp
+    22                                  
+    23                                  	
+    24                                  
+    25 0000001B B804000000              	mov eax,4
+    26 00000020 BB01000000              	mov ebx,1
+    27 00000025 B9[00000000]            	mov ecx, Destination
+    28 0000002A BA01000000              	mov edx,len
+    29 0000002F CD80                    	int 0x80
+    30                                  
+    31 00000031 C3                      	ret
